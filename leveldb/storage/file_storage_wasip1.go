@@ -4,8 +4,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-//go:build darwin || dragonfly || freebsd || linux || netbsd || (openbsd && !wasip1 && !wasm && !js)
-// +build darwin dragonfly freebsd linux netbsd openbsd,!wasip1,!wasm,!js
+//go:build wasip1
+// +build wasip1
 
 package storage
 
@@ -49,15 +49,7 @@ func newFileLock(path string, readOnly bool) (fl fileLock, err error) {
 }
 
 func setFileLock(f *os.File, readOnly, lock bool) error {
-	how := syscall.LOCK_UN
-	if lock {
-		if readOnly {
-			how = syscall.LOCK_SH
-		} else {
-			how = syscall.LOCK_EX
-		}
-	}
-	return syscall.Flock(int(f.Fd()), how|syscall.LOCK_NB)
+	return nil
 }
 
 func rename(oldpath, newpath string) error {
